@@ -27,17 +27,30 @@ server.registerTool(
     },
   },
   async ({ projectRoot, savePath }) => {
-    await auditPackage(projectRoot, savePath);
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `审计完成，结果已保存到: ${savePath}`,
-        },
-      ],
-    };
+    try {
+      await auditPackage(projectRoot, savePath);
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `审计完成，结果已保存到: ${savePath}`,
+          },
+        ],
+      };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `审计失败: ${message}`,
+          },
+        ],
+        isError: true,
+      };
+    }
   }
 );
 
 const transport = new StdioServerTransport();
-server.connect(transport);
+await server.connect(transport);
