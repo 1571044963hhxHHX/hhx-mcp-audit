@@ -1,8 +1,11 @@
 {
   "name": "@hhxhhxhhx/hhx-mcp-audit",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "",
   "main": "src/mcpServer.js",
+  "bin": {
+    "hhx-mcp-audit": "src/mcpServer.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/mcpServer.js"
